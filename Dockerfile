@@ -1,10 +1,10 @@
-# We use the 'edge' tag because it supports the v34 schema
-FROM nextcloud:edge
+# Use the daily 'master' build which corresponds to v34
+FROM nextcloud:latest
 
-# Clean and copy your fork
+# If 'latest' still gives you the v32 error, use the specific master tag:
+# FROM nextcloud:2026-01-30-apache (Note: Tags change daily, 'latest' is safer)
+
 RUN rm -rf /var/www/html/*
 COPY . /var/www/html/
 
-# Ensure permissions are correct for Render
 RUN chown -R www-data:www-data /var/www/html
-

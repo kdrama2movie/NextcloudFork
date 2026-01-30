@@ -1,9 +1,10 @@
-# Use the official image as a base because it has the webserver and PHP extensions
-FROM nextcloud:apache
+# We use the 'edge' tag because it supports the v34 schema
+FROM nextcloud:edge
 
-# Delete the default code and copy YOUR forked code into the container
+# Clean and copy your fork
 RUN rm -rf /var/www/html/*
 COPY . /var/www/html/
 
-# Fix permissions
+# Ensure permissions are correct for Render
 RUN chown -R www-data:www-data /var/www/html
+

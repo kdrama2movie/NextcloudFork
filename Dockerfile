@@ -1,10 +1,13 @@
-# Use the daily 'master' build which corresponds to v34
-FROM nextcloud:latest
+FROM nextcloud:fpm
 
-# If 'latest' still gives you the v32 error, use the specific master tag:
-# FROM nextcloud:2026-01-30-apache (Note: Tags change daily, 'latest' is safer)
-
+# 1. Clear out the image's old code
 RUN rm -rf /var/www/html/*
+
+# 2. Copy your v34 fork
 COPY . /var/www/html/
 
+# 3. Disable PHP JIT (The most common cause of Segfault 11)
+RUN echo "opcache.jit=off" > /usr/local/etc/php/conf.d/disable-jit.ini
+
+# 4. Fix permissions
 RUN chown -R www-data:www-data /var/www/html

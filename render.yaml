@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: nextcloud-native
+    runtime: php
+    plan: starter # Free tier might lack the RAM to compile assets
+    buildCommand: "composer install && npm install && npm run build" # This is very heavy
+    startCommand: "apache2-foreground" # Or the specific PHP start command
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://..."
+      # Add all your S3 and Redis variables here
